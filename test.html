@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D3.js Line Chart</title>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+  <div id="chart"></div>
+</body>
+</html>
+<script>
+    // 데이터
+const data1 = [
+  { date: "2023-01-01", value: 10 },
+  { date: "2023-02-01", value: 20 },
+  { date: "2023-03-01", value: 30 },
+  { date: "2023-04-01", value: 40 },
+  { date: "2023-05-01", value: 50 },
+];
+
+const data2 = [
+  { date: "2023-01-01", value: 60 },
+  { date: "2023-02-01", value: 70 },
+  { date: "2023-03-01", value: 80 },
+  { date: "2023-04-01", value: 90 },
+  { date: "2023-05-01", value: 100 },
+];
+
+const data3 = [
+  { date: "2023-01-01", value: 110 },
+  { date: "2023-02-01", value: 120 },
+  { date: "2023-03-01", value: 130 },
+  { date: "2023-04-01", value: 140 },
+  { date: "2023-05-01", value: 150 },
+];
+
+const data4 = [
+  { date: "2023-01-01", value: 160 },
+  { date: "2023-02-01", value: 170 },
+  { date: "2023-03-01", value: 180 },
+  { date: "2023-04-01", value: 190 },
+  { date: "2023-05-01", value: 200 },
+];
+
+// 차트 영역 설정
+const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+const width = 500 - margin.left - margin.right;
+const height = 400 - margin.top - margin.bottom;
+
+const svg = d3
+  .select("#chart")
+  .append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// X축 스케일 설정
+const xScale = d3
+  .scaleTime()
+  .domain(d3.extent(data1, (d) => d.date))
+  .range([0, width]);
+
+// Y축 스케일 설정
+const yScale = d3
+  .scaleLinear()
+  .domain([
+    d3.min(data1, (d) => d.value),
+    d3.max(data4, (d) => d.value),
+  ])
+  .range([height, 0]);
+
+// X축 그리기
+svg
+  .append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(xScale));
+
+// Y축 그리기
+svg.append("g").call(d3.axisLeft(yScale));
+
+</script>
